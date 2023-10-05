@@ -10,7 +10,7 @@ import (
 
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
-	Currency string `json:"currency" binding:"required,oneof=USD EUR"`
+	Currency string `json:"currency" binding:"required,currency"`
 }
 
 type getAccountRequest struct {
@@ -41,7 +41,7 @@ func (server *Server) createAccount(ctx *gin.Context) {
 		Balance:  0,
 	}
 
-	account, err := server.strore.CreateAccount(ctx, arg)
+	account, err := server.store.CreateAccount(ctx, arg)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
@@ -60,7 +60,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 		return
 	}
 
-	account, err := server.strore.GetAccount(ctx, req.ID)
+	account, err := server.store.GetAccount(ctx, req.ID)
 
 	if err != nil {
 
@@ -90,7 +90,7 @@ func (server *Server) listAccounts(ctx *gin.Context) {
 		Offset: (req.PageID - 1) * req.PageSize,
 	}
 
-	accounts, err := server.strore.ListAccounts(ctx, arg)
+	accounts, err := server.store.ListAccounts(ctx, arg)
 
 	if err != nil {
 
@@ -121,7 +121,7 @@ func (server *Server) updateAccount(ctx *gin.Context) {
 		Balance: reqBody.Balance,
 	}
 
-	account, err := server.strore.UpdateAccount(ctx, arg)
+	account, err := server.store.UpdateAccount(ctx, arg)
 
 	if err != nil {
 
@@ -146,7 +146,7 @@ func (server *Server) deleteAccount(ctx *gin.Context) {
 		return
 	}
 
-	err := server.strore.DeleteAccount(ctx, req.ID)
+	err := server.store.DeleteAccount(ctx, req.ID)
 
 	if err != nil {
 
