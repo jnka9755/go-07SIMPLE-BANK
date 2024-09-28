@@ -73,7 +73,7 @@ func TestAuthMiddleware(t *testing.T) {
 			},
 		},
 		{
-			name: "InvalidAuthorizationFormat",
+			name: "ExpiredToken",
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, "user", -time.Minute)
 			},

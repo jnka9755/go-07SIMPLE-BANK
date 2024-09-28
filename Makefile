@@ -1,26 +1,26 @@
 postgres:
-	docker run --name postgres12 --network simplebank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+	docker run --name postgres_container --network simplebank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=jnka9755 -d postgres
 
 createdb: 
-	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
+	docker exec -it postgres_container createdb --username=root --owner=root simple_bank
 
 dropdb:
-	docker exec -it postgres12 dropdb simple_bank
+	docker exec -it postgres_container dropdb simple_bank
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:jnka9755@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
 migrateup1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+	migrate -path db/migration -database "postgresql://root:jnka9755@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:jnka9755@localhost:5432/simple_bank?sslmode=disable" -verbose down
 
 migratedown1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
+	migrate -path db/migration -database "postgresql://root:jnka9755@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
 sqlc:
-	docker run --rm -v "C:\Desarrollos Actuales\Curso de GO Master\SimpleBank:/src" -w /src kjconroy/sqlc generate
+	sqlc generate
 
 test:
 	go test -v -cover ./...
