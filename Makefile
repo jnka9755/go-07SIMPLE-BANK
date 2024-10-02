@@ -2,7 +2,7 @@
 include app.env
 
 postgres:
-	docker run --name postgres_container --network simplebank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=jnka9755 -d postgres
+	docker run --name postgres_container --network simplebank-network -p 5432:5432 -e POSTGRES_USER=$(POSTGRES_USER) -e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) -d postgres
 
 createdb: 
 	docker exec -it postgres_container createdb --username=root --owner=root simple_bank
