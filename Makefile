@@ -5,7 +5,7 @@ postgres:
 	docker run --name postgres_container --network simplebank-network -p 5432:5432 -e POSTGRES_USER=$(POSTGRES_USER) -e POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) -d postgres
 
 createdb: 
-	docker exec -it postgres_container createdb --username=root --owner=root simple_bank
+	docker exec -it postgres_container createdb --username=$(POSTGRES_USER) --owner=$(POSTGRES_USER) simple_bank
 
 dropdb:
 	docker exec -it postgres_container dropdb simple_bank
