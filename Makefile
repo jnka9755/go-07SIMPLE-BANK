@@ -1,5 +1,5 @@
 
-DB_URL=postgresql://root:jnka9755@localhost:5432/simple_bank?sslmode=disable
+include app.env
 
 postgres:
 	docker run --name postgres_container --network simplebank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=jnka9755 -d postgres
@@ -11,16 +11,16 @@ dropdb:
 	docker exec -it postgres_container dropdb simple_bank
 
 migrateup:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up
 
 migrateup1:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up 1
 
 migratedown:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose down
 
 migratedown1:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
+	migrate -path db/migration -database "$(DB_SOURCE)" -verbose down 1
 
 db_docs: 
 	dbdocs build doc/db.dbml
