@@ -7,17 +7,6 @@ The service that we’re going to build is a simple bank. It will provide APIs f
 3. Perform a money transfer between 2 accounts. This should happen within a transaction, so that either both accounts’ balance are updated successfully or none of them are.
 
 ## Setup local development
-
-POSTGRES_USER=root
-POSTGRES_PASSWORD=jnka9755
-DB_DRIVER=postgres
-DB_SOURCE=postgresql://root:jnka9755@localhost:5432/simple_bank?sslmode=disable
-SERVER_ADDRESS=0.0.0.0:8080
-TOKEN_SYMMETRIC_KEY=12345678901234567890123456789012
-ACCESS_TOKEN_DURATION=15m
-REFRESH_TOKEN_DURATION=24h
-
-
 ### Install tools
 
 - [Docker desktop](https://www.docker.com/products/docker-desktop)
