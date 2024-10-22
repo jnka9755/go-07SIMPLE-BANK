@@ -5,6 +5,7 @@ package bp;
 import "google/api/annotations.proto";
 import "rpc_create_user.proto";
 import "rpc_login_user.proto";
+import "rpc_update_user.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/jnka9755/go-07SIMPLE-BANK/pb";
@@ -13,7 +14,7 @@ option go_package = "github.com/jnka9755/go-07SIMPLE-BANK/pb";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
       title: "Simple Bank API"
-      version: "1.1"
+      version: "1.2"
       contact: {
         name: "Simple Bank API"
         url: "https://github.com/jnka9755/go-07SIMPLE-BANK"
@@ -33,6 +34,18 @@ service SimpleBank {
             summary: "Summary: Create user rpc"
         };
     }
+
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse){
+        option (google.api.http) = {
+            patch: "/v1/update_user"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Description: Update user rpc"
+            summary: "Summary: Update user rpc"
+        };
+    }
+
     rpc LoginUser(LoginUserRequest) returns (LoginUserResponse){
         option (google.api.http) = {
             post: "/v1/login_user"
