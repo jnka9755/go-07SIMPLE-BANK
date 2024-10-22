@@ -19,7 +19,7 @@ func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (
 	violations := validateLoginUserRequest(req)
 
 	if len(violations) > 0 {
-		return nil, invalidArgument(violations)
+		return nil, invalidArgumentError(violations)
 	}
 
 	user, err := server.store.GetUser(ctx, req.Username)
@@ -86,11 +86,11 @@ func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (
 func validateLoginUserRequest(req *pb.LoginUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
 
 	if err := validations.ValidateUsername(req.GetUsername()); err != nil {
-		violations = append(violations, fieldViolation("username", err))
+		violations = append(violations, fieldViolationError("username", err))
 	}
 
 	if err := validations.ValidatePassword(req.GetPassword()); err != nil {
-		violations = append(violations, fieldViolation("password", err))
+		violations = append(violations, fieldViolationError("password", err))
 	}
 
 	return violations

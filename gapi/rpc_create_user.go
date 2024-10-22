@@ -18,10 +18,10 @@ func (server *Server) CreateUser(ctx context.Context, req *pb.CreateUserRequest)
 	violations := validateCreateUserRequest(req)
 
 	if len(violations) > 0 {
-		return nil, invalidArgument(violations)
+		return nil, invalidArgumentError(violations)
 	}
 
-	hashedPassword, err := util.HashPassword(req.Password)
+	hashedPassword, err := util.HashPassword(req.GetPassword())
 
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "cannot hash password: %s", err)
@@ -58,19 +58,19 @@ func (server *Server) CreateUser(ctx context.Context, req *pb.CreateUserRequest)
 func validateCreateUserRequest(req *pb.CreateUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
 
 	if err := validations.ValidateUsername(req.GetUsername()); err != nil {
-		violations = append(violations, fieldViolation("username", err))
+		violations = append(violations, fieldViolationError("username", err))
 	}
 
 	if err := validations.ValidatePassword(req.GetPassword()); err != nil {
-		violations = append(violations, fieldViolation("password", err))
+		violations = append(violations, fieldViolationError("password", err))
 	}
 
 	if err := validations.ValidateFullName(req.GetFullName()); err != nil {
-		violations = append(violations, fieldViolation("full_name", err))
+		violations = append(violations, fieldViolationError("full_name", err))
 	}
 
 	if err := validations.ValidateEmail(req.GetEmail()); err != nil {
-		violations = append(violations, fieldViolation("email", err))
+		violations = append(violations, fieldViolationError("email", err))
 	}
 
 	return violations
